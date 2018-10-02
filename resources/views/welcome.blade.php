@@ -29,7 +29,7 @@
     </div>
     @include('partials/footer/familyTreeFooter')
     <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="/js/axios.js"></script>
     <script src="/js/homepage.js"></script>

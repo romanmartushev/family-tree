@@ -8,7 +8,8 @@ gulp.task('default', function() {
 });
 
 elixir(function(mix) {
-    var bpath = 'node_modules/bootstrap-sass/assets';
+    var bpathsass = 'node_modules/bootstrap-sass/assets';
+    var bpath = 'node_modules/bootstrap/dist/js';
     var jqueryPath = 'resources/assets/vendor/jquery';
     var vuePath = 'node_modules/vue/dist/vue.js';
     var axiosPath = 'node_modules/axios/dist/axios.js';
@@ -17,7 +18,8 @@ elixir(function(mix) {
     mix.sass('chat.scss','public_html/css');
     mix.sass('dark.scss','public_html/css')
         .copy(jqueryPath + '/dist/jquery.min.js', 'public_html/js')
-        .copy(bpath + '/fonts', 'public_html/fonts')
+        .copy(bpath + '/*.js', 'public_html/js')
+        .copy(bpathsass + '/fonts', 'public_html/fonts')
         .copy(vuePath, 'public_html/js')
         .copy(axiosPath, 'public_html/js')
         .copy('resources/assets/js/*.js', 'public_html/js')

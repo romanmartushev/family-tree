@@ -93,7 +93,7 @@
                 @endif
             </div>
             @for($i=1;$i<count($families);$i++)
-                <div id="f{{$i}}" class="tab-pane fade">
+                <div id="f{{$i}}" class="tab-pane">
                     @if($families[$i][0]['spouse'] != "")
                         <div class="row text-center txt-white">
                             @if(count($families[$i]) > 2)

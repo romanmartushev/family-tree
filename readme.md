@@ -3,9 +3,10 @@
 <p>Uses composer and npm for package managing</p>
 <h2>Development</h2>
 <p>First run <code>composer install</code> then <code>npm install</code></p>
-<p>Then <code>php artisan key:generate</code>. If this does not work run <code>docker-compose up</code> then <code>docker-compose exec code php artisan key:genrate</code> then you might have to restart your containers or re-build</p>
+<p>Then <code>php artisan key:generate</code>. If this does not work run <code>docker-compose up</code> then <code>docker-compose exec code php artisan key:generate</code> then you might have to restart your containers or re-build</p>
 <p>Finally <code>docker-compose up</code></p>
 <p>Once up and running, run <code>gulp</code> in order to compile and copy sass and js files.
+
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 <p align="center">

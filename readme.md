@@ -6,8 +6,6 @@
 <p>Then <code>php artisan key:generate</code>. If this does not work run <code>docker-compose up</code> then <code>docker-compose exec code php artisan key:generate</code> then you might have to restart your containers or re-build</p>
 <p>Finally <code>docker-compose up</code></p>
 
-<p>This app uses google flights api which I believe at this moment is no loger supported. Needs to be changed in order for the app to work again.</p>
-
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 <p align="center">

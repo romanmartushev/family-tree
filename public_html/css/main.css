@@ -102,7 +102,8 @@ body {
 }
 
 .leaf {
-  background-image: url("/Images/leaf.png");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/Images/leaf.png");
+  box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.5) inset;
   background-size: cover;
   background-position: center;
 }

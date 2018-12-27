@@ -19,6 +19,10 @@ Route::get('/homepage-birthdays','FamilyTree@getBirthdays');
 
 Route::get('/family-tree','FamilyTree@viewTree');
 
+Route::get('/tree',function(){
+    return view('tree');
+});
+
 Route::get('/add-member', 'FamilyTree@startCreate');
 Route::get('/add-new-member','FamilyTree@createMember');
 

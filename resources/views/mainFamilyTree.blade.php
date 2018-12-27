@@ -6,18 +6,18 @@
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Select A Family<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-            @if($families[0][0]['spouse'] != "")
-            <li><a data-toggle="tab" href="#f0">{{$families[0][0]['name']}} & {{$families[0][1]['name']}}</a></li>
-            @else
-                <li><a data-toggle="tab" href="#f0">{{$families[0][0]['name']}}</a></li>
-            @endif
-            @for($i=1;$i<count($families);$i++)
-                @if($families[$i][0]['spouse'] != "")
-                    <li><a data-toggle="tab" href="#f{{$i}}">{{$families[$i][0]['name']}} & {{$families[$i][1]['name']}}</a> </li>
-                @else
-                    <li><a data-toggle="tab" href="#f{{$i}}">{{$families[$i][0]['name']}}</a></li>
-                @endif
-            @endfor
+                    @if($families[0][0]['spouse'] != "")
+                        <li><a data-toggle="tab" href="#f0">{{$families[0][0]['name']}} & {{$families[0][1]['name']}}</a></li>
+                    @else
+                        <li><a data-toggle="tab" href="#f0">{{$families[0][0]['name']}}</a></li>
+                    @endif
+                    @for($i=1;$i<count($families);$i++)
+                        @if($families[$i][0]['spouse'] != "")
+                            <li><a data-toggle="tab" href="#f{{$i}}">{{$families[$i][0]['name']}} & {{$families[$i][1]['name']}}</a> </li>
+                        @else
+                            <li><a data-toggle="tab" href="#f{{$i}}">{{$families[$i][0]['name']}}</a></li>
+                        @endif
+                    @endfor
                 </ul>
         </ul>
         <div class="tab-content">

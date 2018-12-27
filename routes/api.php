@@ -17,4 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/members', 'TempFamilyTreeController@viewTree');
+Route::get('/members', 'FamilyTree@viewTree');
+
+Route::post('/add-new-member','FamilyTree@createMember');

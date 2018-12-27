@@ -74,9 +74,8 @@ body {
 }
 
 .special-bullets li:before {
-  /*Using a Bootstrap glyphicon as the bullet point*/
-  content: "\e080";
-  font-family: 'Glyphicons Halflings';
+  content: "\e036";
+  font-family: 'Icons';
   font-size: 9px;
   float: left;
   margin-top: 4px;
@@ -103,7 +102,7 @@ body {
 
 .leaf {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/Images/leaf.png");
-  box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.5) inset;
+  box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.1) inset;
   background-size: cover;
   background-position: center;
 }
@@ -131,7 +130,7 @@ body {
 }
 
 .shadow {
-  text-shadow: 2px 2px 4px #000;
+  text-shadow: 2px 2px 4px black;
 }
 
 .box-shadow {

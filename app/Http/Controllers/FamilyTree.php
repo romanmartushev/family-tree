@@ -4,31 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Member;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use mysql_xdevapi\Exception;
 
 class FamilyTree extends Controller
 {
     /**
-     * allows for the viewing of the family tree
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return array|mixed
      */
     public function viewTree(){
         $spouses = $this->Spouses();
         $families = $this->Children($spouses);
         for($i=0;$i<count($families);$i++){
-            $sort_col = [];
-            foreach ($families[$i] as $key=> $row){
-                $sort_col[$key] = $row['age'];
-            }
-            array_multisort($sort_col, SORT_DESC, $families[$i]);
-        }
-        foreach ($families as $family){
-            if(count($family) == 1){
-                $index = array_search($family,$families);
-                unset($families[$index]);
+            if(array_key_exists('children',$families[$i])){
+                usort($families[$i]['children'], function ($a, $b) {
+                    return new \DateTime($a['birthday']) <=> new \DateTime($b['birthday']);
+                });
             }
         }
-        $families = array_values($families);
-        return view('mainFamilyTree')->with('families',$families);
+        return $families;
     }
 
     /**
@@ -36,34 +30,31 @@ class FamilyTree extends Controller
      * @return array
      */
     protected function Spouses(){
-        $members = Member::all();
-        $memToArray = $members->toArray();
-        $sort_col = array();
-        foreach ($members as $key=> $row) {
-            $sort_col[$key] = $row['age'];
-        }
-        array_multisort($sort_col, SORT_DESC, $memToArray);
+        $members = Member::all()->toArray();
+        usort($members, function ($a, $b) {
+            return new \DateTime($a['birthday']) <=> new \DateTime($b['birthday']);
+        });
         $spouses = [];
-        $i=0;
-        foreach ($memToArray as $mem){
-            if($mem['spouse'] != ""){
-                foreach ($memToArray as $spouse){
-                    if($spouse['spouse'] == $mem['id']){
-                        array_push($spouses,[]);
-                        array_push($spouses[$i],$mem);
-                        array_push($spouses[$i],$spouse);
-                        $i++;
-                        $index = array_search($spouse,$memToArray);
-                        unset($memToArray[$index]);
+        $has_spouse = array_filter($members, function($member){
+            return $member['spouse'] != '' || $member['children'] != '';
+        });
+        $checked = [];
+        $has_spouse = array_values($has_spouse);
+        for($i=0; $i < count($has_spouse); $i++){
+            for($j=0; $j < count($has_spouse); $j++){
+                if(intval($has_spouse[$i]['spouse']) == intval($has_spouse[$j]['id']) && !in_array(intval($has_spouse[$i]['id']),$checked) && !in_array(intval($has_spouse[$j]['id']),$checked)){
+                    if($has_spouse[$i]['children'] == ''){
+                        array_push($spouses,array('couple' => [$has_spouse[$i],$has_spouse[$j]]));
+                    }else{
+                        array_push($spouses,array('parents' => [$has_spouse[$i],$has_spouse[$j]], 'children' => []));
                     }
+                    array_push($checked,intval($has_spouse[$i]['id']));
+                    array_push($checked,intval($has_spouse[$j]['id']));
+                }elseif(intval($has_spouse[$i]['spouse']) == '' && $has_spouse[$i]['children'] != '' && !in_array(intval($has_spouse[$i]['id']),$checked)){
+                    array_push($spouses,array('parents' => [$has_spouse[$i]], 'children' => []));
+                    array_push($checked,intval($has_spouse[$i]['id']));
                 }
-            }else{
-                array_push($spouses,[]);
-                array_push($spouses[$i],$mem);
-                $i++;
             }
-            $index = array_search($mem,$memToArray);
-            unset($memToArray[$index]);
         }
         return $spouses;
     }
@@ -74,32 +65,16 @@ class FamilyTree extends Controller
      * @return mixed
      */
     protected function Children($spouses){
-        $i=0;
-        $members = Member::all();
-        $memToChildArray = $members->toArray();
-        foreach($spouses as $couples){
-            if($couples[0]['children'] !=""){
-                $temp = trim($couples[0]['children']);
-                $children = explode(" ",$temp);
-                foreach ($children as $child){
-                    foreach ($memToChildArray as $cMember){
-                        if($cMember['id'] == $child){
-                            array_push($spouses[$i],$cMember);
-                        }
-                    }
+        for($i=0;$i<count($spouses);$i++){
+            if(array_key_exists('children',$spouses[$i])){
+                $children_string = trim($spouses[$i]['parents'][0]['children']);
+                $children = explode(" ",$children_string);
+                foreach ($children as $child_id){
+                    array_push($spouses[$i]['children'], Member::where('id',intval($child_id))->first()->toArray());
                 }
             }
-            $i++;
         }
         return $spouses;
-    }
-
-    /**
-     * display the form for creating a new family member
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function startCreate(){
-        return view('addFamilyTree');
     }
 
     /**
@@ -120,31 +95,35 @@ class FamilyTree extends Controller
     }
 
     /**
-     * creates a new family member
      * @param Request $request
      * @return array
+     * @throws \Exception
      */
     public function createMember(Request $request){
-        if($request->input("name") != "" && $request->input("birthday") != ""){
-            if($member = Member::where(['name' => $request->input("name"), 'birthday' => $request->input("birthday")])->first()){
-                return $response = ['error' => 'Family Member Already Exists!'];
-            }
-            $date = new \DateTime($request->input("birthday"));
-            $now = new \DateTime();
-            $age = $now->diff($date);
-            $member = new Member([
-                "age" => $age->y,
-                "name" => $request->input("name"),
-                "birthday" => $request->input("birthday"),
-                "phone_number" => $request->input("phoneNumber"),
-                "email" => $request->input("email")
-            ]);
-            $member->save();
-            return $response = ['success' =>'Family Member Successfully Added!'];
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'birthday' => 'required',
+            'phoneNumber' => 'required',
+            'email' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return ['errors' => $validator->errors()->toArray()];
         }
-
-        return $response = ['error' => 'Name and Birthday Fields must be Filled'];
-
+        if($member = Member::where(['name' => $request->input("name"), 'birthday' => $request->input("birthday")])->first()){
+            return ['errors' => ['errors' => ['Family member already exists!']]];
+        }
+        $date = new \DateTime($request->input("birthday"));
+        $now = new \DateTime();
+        $age = $now->diff($date);
+        $member = new Member([
+            "age" => $age->y,
+            "name" => $request->input("name"),
+            "birthday" => $request->input("birthday"),
+            "phone_number" => $request->input("phoneNumber"),
+            "email" => $request->input("email")
+        ]);
+        $member->save();
+        return $response = ['success' =>'Family Member Successfully Added!'];
     }
 
     /**
@@ -236,8 +215,8 @@ class FamilyTree extends Controller
     }
 
     /**
-     * Checks to see if there is a birthday today
      * @return array
+     * @throws \Exception
      */
     public function getBirthdays(){
         $members = Member::all();
@@ -258,9 +237,9 @@ class FamilyTree extends Controller
     }
 
     /**
-     * Gets the age for a member
      * @param $member
      * @return int
+     * @throws \Exception
      */
     public function getAge($member){
         $date = new \DateTime($member->birthday);

@@ -5,39 +5,38 @@ new Vue({
     el:'#root',
     data:{
         success: '',
-        error:''
+        errors:'',
+        name: '',
+        birthday: '',
+        phoneNumber: '',
+        email: ''
     },
     methods: {
         addMember: function(){
-            var self = this;
-            $.ajax({
-                method:"GET",
-                type:"GET",
-                url:"/add-new-member",
-                data:{
-                    name: $("#InputName").val(),
-                    birthday: $("#InputBirthday").val(),
-                    phoneNumber: $("#InputPhoneNumber").val(),
-                    email: $("#InputEmail").val()
-                },
-                success: function(data){
-                    if(data["success"]){
-                        $("#InputName").val('');
-                        $("#InputBirthday").val('');
-                        $("#InputPhoneNumber").val('');
-                        $("#InputEmail").val('');
-                        self.success = data["success"];
-                        setTimeout(function(){
-                            self.success = '';
-                        },5000);
-                    }else{
-                        self.error = data["error"];
-                        setTimeout(function(){
-                            self.error = '';
-                        },5000);
-                    }
+            var vm = this;
+            axios.post('/api/add-new-member', {
+                name: vm.name,
+                birthday: vm.birthday,
+                phoneNumber: vm.phoneNumber,
+                email: vm.email
+            }).then(function(response){
+                if(response.data.hasOwnProperty('success')){
+                    vm.name = '';
+                    vm.birthday = '';
+                    vm.phoneNumber = '';
+                    vm.email = '';
+                    vm.success = response.data.success;
+                }else{
+                    vm.errors = response.data.errors;
+                    console.log(vm.errors)
                 }
-            })
+            }).catch(function(errors){
+               vm.errors = errors.response.data.errors;
+            });
+            setTimeout(function(){
+                vm.error = '';
+                vm.success = '';
+            },5000);
         }
 
     }

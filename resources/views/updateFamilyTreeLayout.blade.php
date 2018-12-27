@@ -7,14 +7,15 @@
     <title>Update A Family Member</title>
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/main.css" rel="stylesheet">
+    <link href="/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
     <div class="row tree-1 padding-xs margin-top-lg">
-        <div id="mainHeading" class="txt-white margin-left-auto margin-right-auto text-center">
-            <h1 class="underline shadow">Update A Family Member</h1>
+        <div id="mainHeading" class="col-12 txt-white margin-left-auto margin-right-auto text-center">
+            <h1 class="underline"><span class="shadow">Update A Family Member</span></h1>
         </div>
-        <div id="root" class="col-md-6">
+        <div id="root" class="col-6">
             <div class="form-group">
                 @yield('Members')
             </div>
@@ -30,7 +31,7 @@
                 <label class="txt-white" for="InputEmail">Email address:</label>
                 <input type="email" class="form-control" name="email" id="InputEmail" placeholder="Email">
             </div>
-            <button class="btn btn-default" v-on:click="updateMember">Update Member</button>
+            <button class="btn btn-default" @click="updateMember">Update Member</button>
             <div class="alert alert-success" v-if="success">
                 <ul>
                     <li>@{{success}}</li>

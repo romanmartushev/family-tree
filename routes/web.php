@@ -17,14 +17,13 @@ Route::get('/', function () {
 
 Route::get('/homepage-birthdays','FamilyTree@getBirthdays');
 
-Route::get('/family-tree','FamilyTree@viewTree');
-
-Route::get('/tree',function(){
-    return view('tree');
+Route::get('/family-tree', function(){
+    return view('main');
 });
 
-Route::get('/add-member', 'FamilyTree@startCreate');
-Route::get('/add-new-member','FamilyTree@createMember');
+Route::get('/add-member', function(){
+    return view('addMember');
+});
 
 Route::get('/update-member', 'FamilyTree@startUpdate');
 Route::get('/update-a-member','FamilyTree@updateMember');

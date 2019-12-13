@@ -22,7 +22,7 @@
                     </div>
                     <div class="form-group">
                         <label class="txt-white" for="InputBirthday">Birthday:</label>
-                        <input type="text" class="form-control" name="birthday" id="InputBirthday" placeholder="Birthday" required v-model="birthday">
+                        <input type="date" class="form-control" name="birthday" id="InputBirthday" placeholder="Birthday" required v-model="birthday">
                     </div>
                     <div class="form-group">
                         <label class="txt-white" for="InputPhoneNumber">Phone Number:</label>

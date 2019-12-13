@@ -89,6 +89,7 @@ class FamilyTree extends Controller
      * @throws \Exception
      */
     public function createMember(Request $request){
+        $birthday = new \DateTime($request->input("birthday"));
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'birthday' => 'required',
@@ -98,7 +99,7 @@ class FamilyTree extends Controller
         if ($validator->fails()) {
             return ['errors' => $validator->errors()->toArray()];
         }
-        if($member = Member::where(['name' => $request->input("name"), 'birthday' => $request->input("birthday")])->first()){
+        if($member = Member::where(['name' => $request->input("name"), 'birthday' => $birthday->format('m/d/Y')])->first()){
             return ['errors' => ['errors' => ['Family member already exists!']]];
         }
         $date = new \DateTime($request->input("birthday"));
@@ -107,7 +108,7 @@ class FamilyTree extends Controller
         $member = new Member([
             "age" => $age->y,
             "name" => $request->input("name"),
-            "birthday" => $request->input("birthday"),
+            "birthday" => $birthday->format('m/d/Y'),
             "phone_number" => $request->input("phoneNumber"),
             "email" => $request->input("email")
         ]);

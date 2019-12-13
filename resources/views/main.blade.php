@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Your Family Tree</title>
-    <link href="/css/app.css" rel="stylesheet">
     <link href="/css/main.css" rel="stylesheet">
     <link href="/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
 </head>
@@ -63,10 +62,6 @@
     </div>
 </div>
 @include('partials/footer/familyTreeFooter')
-<script src="/js/jquery.min.js"></script>
-<script src="/js/bootstrap.bundle.min.js"></script>
-<script src="/js/axios.js"></script>
-<script src="/js/vue.js"></script>
 <script src="/js/tree.js"></script>
 </body>
 </html>

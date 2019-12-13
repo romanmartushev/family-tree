@@ -11,19 +11,18 @@
 |
 */
 
+use App\Http\Controllers\FamilyTree;
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/homepage-birthdays','FamilyTree@getBirthdays');
+Route::get('/homepage-birthdays', [FamilyTree::class, 'getBirthdays']);
 
-Route::get('/family-tree', function(){
-    return view('main');
-});
+Route::view('/family-tree', 'main');
 
-Route::get('/add-member', function(){
-    return view('addMember');
-});
+Route::view('/add-member', 'addMember');
 
-Route::get('/update-member', 'FamilyTree@startUpdate');
-Route::get('/update-a-member','FamilyTree@updateMember');
+Route::view('/update-member', 'updateMember');
+Route::post('/update-a-member',[FamilyTree::class, 'updateMember']);

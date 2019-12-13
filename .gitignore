@@ -13,3 +13,4 @@ yarn-error.log
 .env
 .env-live
 .phpunit.result.cache
+mix-manifest.json

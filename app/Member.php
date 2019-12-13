@@ -14,6 +14,6 @@ use Illuminate\Database\Eloquent\Model;
 class Member extends Model
 {
     protected $fillable = [
-        'name','age','birthday','phone_number','email'
+        'name','age','birthday','phone_number','email', 'address', 'parents', 'children', 'spouse','deceased'
     ];
 }

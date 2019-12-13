@@ -38,7 +38,7 @@ class CheckBirthdays extends Command
      */
     public function handle()
     {
-        $members = Member::all();
+        $members = Member::where('deceased',false)->get();
         $birthdayToday = [];
         foreach ($members as $member){
             $check = substr($member->birthday,0, -5);
@@ -51,13 +51,13 @@ class CheckBirthdays extends Command
         }
         if(!empty($birthdayToday)){
             $message = "";
-            foreach($birthdayToday as $person){
+            foreach($birthdayToday as $person) {
                 $date = new \DateTime($person->birthday);
                 $now = new \DateTime();
                 $age = $now->diff($date);
                 $message .= ' '.$person->name.' turned '.$age->y.' today! ';
             }
-            $message .= ' Wish them a Happy Birthday!';
+            $message .= ' Wish them a Happy Birthday! -- Our '.env('FAMILY').' Family.';
             $this->sendMessage($message);
         }
     }

@@ -25,11 +25,11 @@
                     </div>
                     <div class="form-group">
                         <label class="txt-white" for="InputPhoneNumber">Phone Number:</label>
-                        <input type="text" class="form-control" name="phoneNumber" id="InputPhoneNumber" placeholder="Phone Number" required v-model="phoneNumber">
+                        <input type="text" class="form-control" name="phoneNumber" id="InputPhoneNumber" placeholder="Phone Number" v-model="phoneNumber">
                     </div>
                     <div class="form-group">
                         <label class="txt-white" for="InputEmail">Email address:</label>
-                        <input type="email" class="form-control" name="email" id="InputEmail" placeholder="Email" required v-model="email">
+                        <input type="email" class="form-control" name="email" id="InputEmail" placeholder="Email" v-model="email">
                     </div>
                     <button class="btn btn-light" type="submit">Add Member</button>
                 </form>

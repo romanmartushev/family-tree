@@ -93,8 +93,6 @@ class FamilyTree extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'birthday' => 'required',
-            'phoneNumber' => 'required',
-            'email' => 'required',
         ]);
         if ($validator->fails()) {
             return ['errors' => $validator->errors()->toArray()];
@@ -110,7 +108,11 @@ class FamilyTree extends Controller
             "name" => $request->input("name"),
             "birthday" => $birthday->format('m/d/Y'),
             "phone_number" => $request->input("phoneNumber"),
-            "email" => $request->input("email")
+            "email" => $request->input("email"),
+            "address" => "",
+            "parents" => "",
+            "spouse" => "",
+            "children" => ""
         ]);
         $member->save();
         return $response = ['success' =>'Family Member Successfully Added!'];

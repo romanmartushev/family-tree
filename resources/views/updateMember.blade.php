@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Update A Family Member</title>
     <link href="/css/main.css" rel="stylesheet">
-    <link href="/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">

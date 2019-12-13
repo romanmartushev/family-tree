@@ -6,7 +6,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Your Family Tree</title>
     <link href="/css/main.css" rel="stylesheet">
-    <link href="/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
 </head>
 <body>
 <div class="container" id="tree">

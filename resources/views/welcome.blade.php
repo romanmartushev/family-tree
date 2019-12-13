@@ -6,7 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Home Page</title>
         <link href="/css/main.css" rel="stylesheet">
-        <link href="/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
     </head>
     <body>
     <div class="container">
@@ -18,10 +17,10 @@
             </div>
             <div class="col-12 margin-top-lg">
                 <div class="row" style="background-color: #5e5e5e;">
-                    <ul v-if="birthdays.length > 0" class="txt-white special-bullets mt-3">
+                    <ul v-if="birthdays.length > 0" class="txt-white mt-3">
                         <li v-for="person in birthdays"><span class="shadow">@{{person['name']}} turned @{{person['age']}} today!</span></li>
                     </ul>
-                    <ul v-else class="txt-white special-bullets mt-3">
+                    <ul v-else class="txt-white mt-3">
                         <li><span class="shadow">No Birthdays today!</span></li>
                     </ul>
                 </div>

@@ -14,3 +14,4 @@ yarn-error.log
 .env-live
 .phpunit.result.cache
 mix-manifest.json
+/config/numbers.php

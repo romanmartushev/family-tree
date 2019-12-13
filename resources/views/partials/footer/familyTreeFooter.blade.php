@@ -3,7 +3,7 @@
         <div class="col-6 txt-white">
             <div class="padding-xs">
                 <h5 class="title">THE FAMILY TREE PROJECT</h5>
-                <p>Here you can view the Ivanov family tree</p>
+                <p>Here you can view the {{env('FAMILY','')}} family tree</p>
             </div>
         </div>
         <div class="col-6">

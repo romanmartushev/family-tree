@@ -20,9 +20,13 @@ Route::get('/', function () {
 
 Route::get('/homepage-birthdays', [FamilyTree::class, 'getBirthdays']);
 
-Route::view('/family-tree', 'main');
+Route::view('/family-tree', 'main')->middleware('auth');
 
-Route::view('/add-member', 'addMember');
+Route::view('/add-member', 'addMember')->middleware('auth');
 
-Route::view('/update-member', 'updateMember');
+Route::view('/update-member', 'updateMember')->middleware('auth');
 Route::post('/update-a-member',[FamilyTree::class, 'updateMember']);
+
+\Illuminate\Support\Facades\Auth::routes(['register' => false]);
+
+Route::get('/home', 'HomeController@index')->name('home');
